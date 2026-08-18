@@ -26,11 +26,63 @@ const chatScript = [
   { from: "bot", text: "Booked Tuesday 10am. Lead scored 92." },
 ] as const;
 
+type ChatState = { index: number; typing: boolean; fading: boolean };
+
 export function ChatPreview({ playKey }: { playKey: string }) {
-  // 2 ticks per message: typing, then delivered
-  const frame = useLoop(chatScript.length * 2 + 2, 620, playKey);
-  const shown = Math.min(Math.floor(frame / 2), chatScript.length);
-  const typing = frame % 2 === 0 && shown < chatScript.length;
+  const [state, setState] = useState<ChatState>({
+    index: 0,
+    typing: true,
+    fading: false,
+  });
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    let cancelled = false;
+
+    const run = (index: number) => {
+      if (cancelled) return;
+
+      if (index >= chatScript.length) {
+        setState({ index, typing: false, fading: false });
+        timer = setTimeout(() => {
+          if (cancelled) return;
+          setState({ index, typing: false, fading: true });
+          timer = setTimeout(() => {
+            if (cancelled) return;
+            setState({ index: 0, typing: true, fading: false });
+            run(0);
+          }, 520);
+        }, 1800);
+        return;
+      }
+
+      const msg = chatScript[index]!;
+      // typing indicator, then the message lands
+      setState({ index, typing: true, fading: false });
+      timer = setTimeout(
+        () => {
+          if (cancelled) return;
+          setState({ index, typing: false, fading: false });
+          timer = setTimeout(
+            () => run(index + 1),
+            600 + Math.min(msg.text.length * 22, 900),
+          );
+        },
+        msg.from === "user" ? 520 : 760,
+      );
+    };
+
+    setState({ index: 0, typing: true, fading: false });
+    run(0);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [playKey]);
+
+  const settled = chatScript.slice(0, state.index);
+  const current = chatScript[state.index];
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-muted/50 p-4">
@@ -41,45 +93,58 @@ export function ChatPreview({ playKey }: { playKey: string }) {
         </span>
       </div>
 
-      <div className="mt-3 flex flex-1 flex-col justify-end gap-2">
-        {chatScript.slice(0, shown).map((m, i) => (
+      <div
+        className="mt-3 flex flex-1 flex-col justify-end gap-2 transition-opacity duration-500 ease-out"
+        style={{ opacity: state.fading ? 0 : 1 }}
+      >
+        {settled.map((m) => (
           <div
             key={m.text}
             className={cn(
-              "fade-up max-w-[86%] rounded-2xl border border-border/50 bg-card px-3.5 py-2 text-[12.5px] leading-snug shadow-[0_8px_20px_-18px_oklch(0_0_0/0.5)]",
+              "max-w-[86%] rounded-2xl border border-border/50 bg-card px-3.5 py-2 text-[12.5px] leading-snug shadow-[0_8px_20px_-18px_oklch(0_0_0/0.5)]",
               m.from === "user"
                 ? "ml-auto text-right text-foreground"
                 : "text-muted-foreground",
             )}
-            style={{ animationDelay: `${i * 20}ms` }}
           >
             {m.text}
           </div>
         ))}
 
-        {typing && (
+        {current && (
           <div
+            key={`live-${state.index}`}
             className={cn(
-              "fade-up flex w-fit items-center gap-1 rounded-2xl border border-border/50 bg-card px-3.5 py-2.5",
-              chatScript[shown]?.from === "user" && "ml-auto",
+              "chat-bubble-in max-w-[86%] rounded-2xl border border-border/50 bg-card px-3.5 py-2 text-[12.5px] leading-snug shadow-[0_8px_20px_-18px_oklch(0_0_0/0.5)]",
+              current.from === "user"
+                ? "ml-auto text-right text-foreground"
+                : "text-muted-foreground",
+              state.typing && "w-fit max-w-none py-2.5",
             )}
           >
-            {[0, 1, 2].map((d) => (
-              <span
-                key={d}
-                className="size-1.5 rounded-full bg-foreground/45"
-                style={{
-                  animation: "bounce-dot 900ms ease-in-out infinite",
-                  animationDelay: `${d * 140}ms`,
-                }}
-              />
-            ))}
+            {state.typing ? (
+              <span className="flex items-center gap-1">
+                {[0, 1, 2].map((d) => (
+                  <span
+                    key={d}
+                    className="size-1.5 rounded-full bg-foreground/45"
+                    style={{
+                      animation: "bounce-dot 1000ms ease-in-out infinite",
+                      animationDelay: `${d * 150}ms`,
+                    }}
+                  />
+                ))}
+              </span>
+            ) : (
+              <span className="chat-text-in block">{current.text}</span>
+            )}
           </div>
         )}
       </div>
     </div>
   );
 }
+
 
 const voiceLines = [
   "Caller: Do you handle emergency leaks tonight?",
