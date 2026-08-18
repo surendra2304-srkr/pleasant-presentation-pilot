@@ -134,29 +134,12 @@ export function SiteNav() {
                     ))}
                   </div>
 
-                  <div className="rounded-2xl bg-muted/70 p-5">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      {(() => {
-                        const Icon = active.icon;
-                        return <Icon className="size-3.5" />;
-                      })()}
-                      {active.label}
-                    </div>
-                    <div className="mt-4 space-y-2.5">
-                      {active.preview.map((line, i) => (
-                        <div
-                          key={line}
-                          className={cn(
-                            "max-w-[85%] rounded-2xl bg-background px-3.5 py-2.5 text-[13px] leading-snug shadow-[0_6px_16px_-14px_oklch(0_0_0/0.35)]",
-                            i % 2 === 1
-                              ? "ml-auto text-right text-foreground"
-                              : "text-muted-foreground",
-                          )}
-                        >
-                          {line}
-                        </div>
-                      ))}
-                    </div>
+                  <div className="h-[17rem]">
+                    {hover === 1 ? (
+                      <VoicePreview playKey={`v-${menu}`} />
+                    ) : (
+                      <ChatPreview playKey={`c-${menu}`} />
+                    )}
                   </div>
                 </div>
               </div>
