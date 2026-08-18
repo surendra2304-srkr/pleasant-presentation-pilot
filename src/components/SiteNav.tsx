@@ -108,7 +108,7 @@ export function SiteNav() {
 
 
             {menu && (
-              <div className="absolute top-full left-1/2 w-[46rem] -translate-x-1/2 pt-4">
+              <div className="absolute top-full left-1/2 w-[42rem] -translate-x-1/2 pt-4">
                 <div className="nav-panel fade-up grid grid-cols-[0.85fr_1.15fr] gap-6 p-6">
                   <div className="flex flex-col gap-6">
                     {products.map((p, i) => (
@@ -134,7 +134,7 @@ export function SiteNav() {
                     ))}
                   </div>
 
-                  <div className="rounded-2xl bg-muted/60 p-5">
+                  <div className="rounded-2xl border border-border/60 bg-background p-5">
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       {(() => {
                         const Icon = active.icon;
@@ -147,7 +147,7 @@ export function SiteNav() {
                         <div
                           key={line}
                           className={cn(
-                            "max-w-[85%] rounded-2xl bg-background px-3.5 py-2.5 text-[13px] leading-snug",
+                            "max-w-[85%] rounded-2xl border border-border/60 bg-card px-3.5 py-2.5 text-[13px] leading-snug shadow-[0_8px_20px_-18px_oklch(0_0_0/0.4)]",
                             i % 2 === 1
                               ? "ml-auto text-right text-foreground"
                               : "text-muted-foreground",
