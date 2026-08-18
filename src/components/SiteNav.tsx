@@ -134,7 +134,7 @@ export function SiteNav() {
                     ))}
                   </div>
 
-                  <div className="rounded-2xl border border-border/60 bg-background p-5">
+                  <div className="rounded-2xl bg-muted/70 p-5">
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       {(() => {
                         const Icon = active.icon;
@@ -147,7 +147,7 @@ export function SiteNav() {
                         <div
                           key={line}
                           className={cn(
-                            "max-w-[85%] rounded-2xl border border-border/60 bg-card px-3.5 py-2.5 text-[13px] leading-snug shadow-[0_8px_20px_-18px_oklch(0_0_0/0.4)]",
+                            "max-w-[85%] rounded-2xl bg-background px-3.5 py-2.5 text-[13px] leading-snug shadow-[0_6px_16px_-14px_oklch(0_0_0/0.35)]",
                             i % 2 === 1
                               ? "ml-auto text-right text-foreground"
                               : "text-muted-foreground",
