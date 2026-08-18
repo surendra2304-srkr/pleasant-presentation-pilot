@@ -1,14 +1,21 @@
-# Welcome to your Lovable project
+# Bright Canvas Editor
+
+https://github.com/surendra2304/kaligan-visual-editor.git
+it is my github repository link
+that roi is not nice
+change its structure and change it theme to light
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://pure-builder.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/0d625f53-53fd-4ba9-af4f-fa66f89208e1).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +27,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
