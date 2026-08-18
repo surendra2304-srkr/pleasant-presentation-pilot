@@ -186,8 +186,8 @@ function Home() {
         </section>
 
         {/* Logo marquee */}
-        <section className="border-y border-border/60 py-6">
-          <p className="mb-5 text-center text-xs tracking-[0.16em] text-muted-foreground">
+        <section className="py-10">
+          <p className="mb-6 text-center text-[0.7rem] tracking-[0.2em] text-muted-foreground/70">
             TEAMS ALREADY RUNNING AI EMPLOYEES
           </p>
           <div className="marquee">
@@ -195,7 +195,7 @@ function Home() {
               {[...logos, ...logos].map((l, i) => (
                 <span
                   key={i}
-                  className="font-display px-8 text-sm font-semibold tracking-[0.18em] text-muted-foreground/70"
+                  className="font-display px-9 text-[0.8rem] font-medium tracking-[0.22em] text-muted-foreground/55"
                 >
                   {l}
                 </span>
@@ -203,6 +203,7 @@ function Home() {
             </div>
           </div>
         </section>
+
 
         {/* Message your AI employee */}
         <section id="chat" className="px-5 py-24">
