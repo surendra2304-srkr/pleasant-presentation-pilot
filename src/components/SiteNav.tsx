@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ChevronDown, Menu, MessageSquare, Mic, X } from "lucide-react";
 import { BotOrb } from "./BotOrb";
+import { ChatPreview, VoicePreview } from "./NavPreview";
 import { cn } from "@/lib/utils";
 
 
